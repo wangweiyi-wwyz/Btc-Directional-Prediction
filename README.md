@@ -230,15 +230,6 @@ config/
 
 ---
 
-## 红线要求（防数据穿越）| Red Line Requirements (Leakage Prevention)
-
-1. **特征标准化 (Feature Standardization)**：必须在数据切分后进行，仅在训练集上 fit | Must be done after splitting; `fit` only on the training set.
-2. **缺失值填充 (Missing Value Imputation)**：仅使用前向填充（ffill），严禁使用后向填充 | Forward-fill (`ffill`) only. Backward-fill is strictly prohibited.
-3. **时序连贯性 (Temporal Coherence)**：严禁随机打乱，必须保持时间顺序 | No random shuffling; chronological order must be preserved.
-4. **目标变量对齐 (Target Variable Alignment)**：特征窗口 `[t-seq_len+1, t]` 对应目标 `y[t+1]` | Feature window maps strictly to the next day's target.
-
----
-
 ## 系统要求 | System Requirements
 
 - Python 3.8+
