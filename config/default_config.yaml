@@ -1,0 +1,97 @@
+# BTC 分类型目标预测系统配置文件
+
+# 数据配置
+data:
+  ohlcv_file: "data/btc_ohlc.csv"
+  technical_file: "data/btc_technical_data_raw.csv"
+  macro_file: "data/macro_data_raw.csv"
+  start_date: "2016-01-01"
+  end_date: "2024-06-30"
+
+# 特征工程配置
+features:
+  scaler_window: 252          # 滚动窗口标准化窗口大小
+  hampel_window: 5            # Hampel 滤波器窗口
+  hampel_n_sigmas: 3.0        # Hampel 滤波器标准差倍数
+  pca_components: 2           # PCA 主成分数量
+  shap_top_k: 50              # SHAP 初筛特征数
+  rfe_n_features: 30          # RFE 最终特征数
+
+# 模型配置
+models:
+  # Ridge 分类器（线性基准）
+  ridge:
+    alpha: 1.0
+  
+  # 随机森林
+  random_forest:
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 5
+    min_samples_leaf: 2
+  
+  # XGBoost
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+  
+  # LightGBM
+  lightgbm:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    num_leaves: 31
+    subsample: 0.8
+    colsample_bytree: 0.8
+  
+  # LSTM
+  lstm:
+    hidden_size: 128
+    num_layers: 1
+    dropout: 0.2
+    bidirectional: false
+    seq_len: 15
+    batch_size: 64
+    learning_rate: 0.001
+    epochs: 100
+    early_stopping_patience: 10
+  
+  # GRU
+  gru:
+    hidden_size: 128
+    num_layers: 1
+    dropout: 0.2
+    bidirectional: false
+    seq_len: 15
+    batch_size: 64
+    learning_rate: 0.001
+    epochs: 100
+    early_stopping_patience: 10
+
+# 训练配置
+training:
+  train_ratio: 0.6            # 训练集比例
+  val_ratio: 0.2              # 验证集比例
+  test_ratio: 0.2             # 测试集比例
+  random_state: 42            # 随机种子
+  cv_folds: 5                 # 交叉验证折数
+
+# 回测配置
+backtesting:
+  initial_capital: 10000      # 初始资金
+  risk_free_rate: 0.0         # 无风险利率
+  signal_threshold: 0.5       # 信号阈值
+  strategies:                 # 交易策略列表
+    - buy_and_hold
+    - long_only
+    - short_only
+    - long_short
+
+# 输出配置
+output:
+  checkpoint_dir: "checkpoints"
+  figure_dir: "figures"
+  log_dir: "logs"

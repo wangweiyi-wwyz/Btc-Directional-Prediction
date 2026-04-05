@@ -1,0 +1,24 @@
+# LightGBM 模型配置
+
+model_type: "lightgbm"
+model_class: "LGBMClassifier"
+
+# 模型超参数
+params:
+  n_estimators: 100       # 提升轮数
+  max_depth: 6            # 树的最大深度
+  learning_rate: 0.1      # 学习率
+  num_leaves: 31          # 叶子节点数
+  subsample: 0.8          # 样本采样比例
+  colsample_bytree: 0.8   # 特征采样比例
+  objective: "binary"
+  metric: "binary_logloss"
+  random_state: 42
+  n_jobs: -1
+  verbose: -1
+
+# 训练配置
+training:
+  use_validation: true
+  early_stopping: true
+  early_stopping_rounds: 10

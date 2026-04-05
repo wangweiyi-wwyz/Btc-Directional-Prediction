@@ -1,0 +1,32 @@
+# 数据划分策略配置
+
+# 固定比例划分 (20/80)
+fixed_split:
+  train_ratio: 0.8        # 训练集比例
+  min_train_samples: 252  # 最小训练样本数（约一年交易日）
+
+# 滚动时间窗口划分
+rolling_split:
+  window_size: 252        # 训练窗口大小（约一年交易日）
+  step_size: 21           # 测试/步进窗口大小（约一月交易日）
+  min_train_samples: 252  # 最小训练样本数
+
+# 牛熊市周期划分
+regime_split:
+  regime_column: "market_regime"  # 市场状态列名
+  min_train_samples: 252          # 最小训练样本数
+  validation_mode: "same_regime"  # 验证模式
+  # validation_mode 选项:
+  #   - "same_regime": 同态验证（牛市训练/牛市测试）
+  #   - "cross_regime": 异态验证（牛市训练/熊市测试）
+
+# 数据预处理配置（红线要求：必须在切分后进行）
+preprocessing:
+  # 标准化方法
+  scaler: "standard"       # standard, minmax, robust
+  # 缺失值处理
+  fill_method: "ffill"     # 前向填充
+  fill_value: 0            # 初始缺失值填充
+  # 特征选择
+  feature_selection: true
+  n_features: 50           # 最终特征数量

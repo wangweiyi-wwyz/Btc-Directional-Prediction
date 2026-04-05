@@ -1,0 +1,35 @@
+# LSTM 深度学习模型配置
+
+model_type: "lstm"
+model_class: "LSTMModel"
+
+# 模型超参数
+params:
+  hidden_size: 128        # 隐藏层单元数
+  num_layers: 1           # LSTM 层数
+  dropout: 0.2            # Dropout 比例
+  bidirectional: false    # 是否使用双向 LSTM
+
+# 训练超参数
+training:
+  seq_len: 15             # 序列长度（滑动窗口）
+  batch_size: 64          # 批次大小
+  learning_rate: 0.001    # 学习率
+  epochs: 100             # 最大训练轮数
+  early_stopping_patience: 10  # 早停耐心值
+  validation_split: 0.2   # 验证集比例
+
+# 优化器配置
+optimizer:
+  type: "adam"
+  weight_decay: 0.0
+
+# 损失函数
+loss:
+  type: "bce_with_logits"  # BCEWithLogitsLoss
+
+# 模型保存
+checkpoint:
+  save_best_only: true
+  monitor: "val_loss"
+  mode: "min"

@@ -1,0 +1,15 @@
+# Ridge 回归模型配置
+
+model_type: "ridge"
+model_class: "RidgeClassifier"
+
+# 模型超参数
+params:
+  alpha: 1.0              # 正则化强度
+  class_weight: "balanced"
+  random_state: 42
+
+# 训练配置
+training:
+  use_validation: true
+  early_stopping: false
